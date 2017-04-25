@@ -32,3 +32,17 @@ p.dashboard-label{
     height: 800px;
     width: 30%;
 }
+
+div.vis-location-container{
+    width: 100%;
+    
+}
+
+div.vis-test-container{
+    
+}
+
+div.small-circle{
+    width: 40px;
+    border-radius: 10px;
+}
