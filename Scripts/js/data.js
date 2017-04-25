@@ -42,6 +42,7 @@ function getTestDataByLocation(locationId) {
 		cbGetTestDataByLocation();
             }
 	}, true, null);
+        
 }
 
 /*
@@ -84,6 +85,8 @@ function cbGetDashboard(){
                 pane.setAttribute("onclick", "generateMap()");
                 break;
             case "California West Total RTT Average":
+                pane.setAttribute("onclick",
+                "createLocationVisualization('1208')");
                 break;
             case "Oregon West Total RTT Average":
                 break;
@@ -142,5 +145,59 @@ function cbGetMapLocationInfomation(){
                        title: mapData["data"][i]["LocationID"]});
         
         
+    }
+}
+
+function createLocationVisualization(locationID){
+    dataUriCall = dataUri + "fnc=getTestDataByLocation" +
+            "&LocationID=" + locationID + "&rand=" + Math.random();
+    loadAsyncData(encodeURI(dataUriCall), "GET", function(locationID) {
+        if (xmlhttpRequest.readyState == 4 && xmlhttpRequest.status == 200){
+            cbCreateLocationVisualization(locationID);
+        }
+    }, true, null);
+}
+
+/*
+ *  Call back function for the getAllTestLocations() function call. Used to
+ *  retrieve all test locations in the CalSpeed database system
+ */
+ function cbCreateLocationVisualization(locationId) {
+	
+     locationData = JSON.parse(xmlhttpRequest.responseText);
+     
+     //Holds the series or selection of tests
+     var visualizationContainer = document.createElement("div");
+     
+     for(var i in locationData["data"]){
+        //alert(locationData["data"][i]["DeviceType"]);
+        var test = locationData["data"][i];
+        
+        //Holds multipule tests
+        var locationContianer = createLocationContainer(locationId);
+        //Holds one and only one test
+        var testContainer = createTestContainer(test["Master_ID"]);
+        
+        for (i = 11; i <= 47; i++){
+            
+            alert(test[i]);
+            
+        }
+                    
+//        for(var key in test){
+//            if(key.substring(0,2) == "cw" & test[key] != "NA"){
+//                for(i = 11; i <= 47; i++){
+//                    
+//                }
+//            }
+//            
+//            if(key.substring(0,2) == "e" & test[key] != "NA"){
+//                alert(key);
+//            }
+//            
+//            if(key.substring(0,2) == "ow" & test[key] != "NA"){
+//                alert(key);
+//            }
+//        }
     }
 }
